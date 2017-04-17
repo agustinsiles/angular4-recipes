@@ -1,3 +1,19 @@
-<h1>
-  {{title}}
-</h1>
+<app-header></app-header>
+<div class="page-container container">
+  <div class="row">
+    <div class="col-md-5">
+      <app-recipe-list 
+        (onRecipesRetrieved)="isListEmpty = $event"
+        (onRecipeSelected)="selectedRecipe = $event"></app-recipe-list>
+      <p *ngIf="isListEmpty">It seems there are no recipes available.</p>
+    </div>
+    <div class="col-md-7">
+      <app-recipe-details 
+        [recipe]="selectedRecipe" 
+        *ngIf="selectedRecipe; else unselectedRecipe"></app-recipe-details>
+      <ng-template #unselectedRecipe>
+        <p *ngIf="!isListEmpty">Please select a recipe.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

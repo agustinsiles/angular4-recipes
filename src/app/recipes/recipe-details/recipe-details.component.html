@@ -1,0 +1,28 @@
+<h4>{{ recipe.order.recipeId }}</h4>
+
+<form #recipeForm="ngForm">
+	<div *ngFor="let msg of recipe.message; let i = index">
+		<div 
+			*ngIf="isQuestionMessage(msg.type); else information" 
+			class="form-group">
+				<input 
+					name="answer-{{i}}"
+					#answer="ngModel"
+					placeholder="{{ msg.prettyIdentifier }}"
+					[(ngModel)]="answers[i]"
+					class="form-control" 
+					required />
+		</div>
+		<ng-template #information>
+			<p>{{ msg.data }}</p>
+		</ng-template>
+	</div>
+
+	<button
+		type="submit"
+		class="btn btn-primary"
+		[disabled]="recipe.order.finished || recipeForm.invalid"
+		(click)="keepCooking();">Continue</button>
+		
+	<p *ngIf="recipe.order.finished">Congratulations, you finished!</p>
+</form>
