@@ -3,12 +3,16 @@
   <div class="row">
     <div class="col-md-5">
       <app-recipe-list 
+        class="sid-recipe-list-component"
         (onRecipesRetrieved)="isListEmpty = $event"
         (onRecipeSelected)="selectedRecipe = $event"></app-recipe-list>
-      <p *ngIf="isListEmpty">It seems there are no recipes available.</p>
+      <p
+        class="sid-recipe-list-empty-msg" 
+        *ngIf="isListEmpty">It seems there are no recipes available.</p>
     </div>
     <div class="col-md-7">
       <app-recipe-details 
+        class="sid-recipe-details-component"
         [recipe]="selectedRecipe" 
         *ngIf="selectedRecipe; else unselectedRecipe"></app-recipe-details>
       <ng-template #unselectedRecipe>

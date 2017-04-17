@@ -1,5 +1,4 @@
-
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecipeListComponent } from './recipe-list.component';
 import { RecipeItemComponent } from './recipe-item/recipe-item.component';
@@ -7,6 +6,7 @@ import { Http, BaseRequestOptions, Response, ResponseOptions, RequestMethod } fr
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { RecipesService } from './../recipes.service';
 import { inject } from "@angular/core/testing";
+import { tick } from "@angular/core/testing";
 
 describe('RecipeListComponent', () => {
   let component: RecipeListComponent;
@@ -44,7 +44,16 @@ describe('RecipeListComponent', () => {
     it('should create component', () => {
       expect(component).toBeTruthy();
       expect(component.showError).toBe(false);
-      
     });
+    
+    it('should get recipes list', fakeAsync(() => {
+      const recipesService = fixture.debugElement.injector.get(RecipesService);
+      const spy = spyOn(recipesService, 'getRecipes')
+        .and.returnValue(Promise.resolve('Data'));
+  
+      fixture.detectChanges();
+      tick();
+      expect(component.recipes).toBe('Data');
+    }));
   });
 });

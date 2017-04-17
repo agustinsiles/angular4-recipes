@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Response } from '@angular/http';
 import { RecipesService } from "app/recipes/recipes.service";
 
@@ -7,15 +7,17 @@ import { RecipesService } from "app/recipes/recipes.service";
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent {
+export class RecipeListComponent implements OnInit {
   @Output() onRecipeSelected: EventEmitter<any> = new EventEmitter();
   @Output() onRecipesRetrieved: EventEmitter<any> = new EventEmitter();
 
   recipes: any[] = [];
   showError: boolean = false;
   
-  constructor(private recipesService: RecipesService) {
-    recipesService.getRecipes().subscribe(
+  constructor(private recipesService: RecipesService) {}
+
+  ngOnInit() {
+    this.recipesService.getRecipes().subscribe(
       (response: Response) => {
         this.showError = false;
         this.recipes = response.json();

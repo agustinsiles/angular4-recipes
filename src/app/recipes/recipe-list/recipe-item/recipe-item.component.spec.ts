@@ -21,14 +21,13 @@ describe('RecipeItemComponent', () => {
   });
 
   describe('initialize component', () => {
-  
-    it('should create componesssnt', () => {
+    it('should create component', () => {
       expect(component).toBeTruthy();
+      expect(component.recipe).toEqual({});
     });
   
     it('should have an empty object for recipe by default', () => {
       const compiled = fixture.debugElement.nativeElement;      
-      expect(component.recipe).toEqual({});
       expect(compiled.querySelector('.sid-recipe-item-id').textContent).toBe('');
       expect(compiled.querySelector('.sid-recipe-item-description').textContent).toBe('');
     });
